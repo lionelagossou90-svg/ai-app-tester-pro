@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI App Tester PRO</title>
+
+<style>
+body{
+  margin:0;
+  font-family:system-ui;
+  background:#0b1220;
+  color:white;
+}
+
+header{
+  padding:15px;
+  background:#0f172a;
+  text-align:center;
+  font-weight:bold;
+  color:#38bdf8;
+}
+
+.container{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+  padding:15px;
+}
+
+.card{
+  background:#111827;
+  padding:15px;
+  border-radius:12px;
+}
+
+input,textarea{
+  width:100%;
+  padding:10px;
+  margin-top:8px;
+  border-radius:8px;
+  border:none;
+  background:#0b1220;
+  color:white;
+}
+
+button{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  border:none;
+  border-radius:8px;
+  background:#22c55e;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#16a34a;
+}
+
+.result{
+  margin-top:10px;
+  padding:10px;
+  background:#0b1220;
+  border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+
+<header>🤖 AI App Tester PRO</header>
+
+<div class="container">
+
+<!-- APP INPUT -->
+<div class="card">
+<h3>📱 Ton application</h3>
+
+<input id="name" placeholder="Nom de l'app">
+<textarea id="desc" placeholder="Description"></textarea>
+
+<button onclick="analyze()">Analyser IA</button>
+
+<div id="status" class="result"></div>
+</div>
+
+<!-- RESULT -->
+<div class="card">
+<h3>🧠 Résultat IA</h3>
+<div id="out" class="result">En attente...</div>
+</div>
+
+<!-- PAYMENT -->
+<div class="card">
+<h3>💳 Premium MTN</h3>
+
+<button onclick="payMTN()">
+Activer Premium 💎
+</button>
+
+<div class="result">
+✔ Paiement sécurisé<br>
+✔ MTN Mobile Money accepté<br>
+✔ Accès Premium instantané
+</div>
+</div>
+
+</div>
+
+<script>
+
+/* =======================
+   IA (CONNECTÉE PLUS TARD)
+======================= */
+async function analyze(){
+
+  let name = document.getElementById("name").value;
+  let desc = document.getElementById("desc").value;
+
+  document.getElementById("status").innerHTML =
+  "Analyse en cours... 🤖";
+
+  try {
+
+    let res = await fetch("https://TON-BACKEND.onrender.com/analyze", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ name, desc })
+    });
+
+    let data = await res.json();
+
+    document.getElementById("out").innerHTML =
+    data.result;
+
+  } catch (e) {
+    document.getElementById("out").innerHTML =
+    "IA pas encore connectée (backend non déployé)";
+  }
+}
+
+/* =======================
+   PAIEMENT MTN
+======================= */
+function payMTN(){
+  window.location.href =
+  "TON-LIEN-MTN-FLUTTERWAVE";
+}
+
+</script>
+
+</body>
+</html>
